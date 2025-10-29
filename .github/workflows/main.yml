@@ -30,7 +30,7 @@ jobs:
         env:
           HELM_REGISTRY_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          echo "${HELM_REGISTRY_PASSWORD}" | helm registry login registry-1.docker.io -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
+          echo "${HELM_REGISTRY_PASSWORD}" | helm registry login registry-1.docker.io -u ${{ env.DOCKER_USERNAME }} --password-stdin
      
       - name: Deploy files
         run: |
