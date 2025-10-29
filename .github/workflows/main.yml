@@ -26,10 +26,14 @@ jobs:
         uses: azure/setup-helm@v3
         with:
           version: v3.12.0
-
+      - name: Login to Helm Registry
+        env:
+          HELM_REGISTRY_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          echo "${HELM_REGISTRY_PASSWORD}" | helm registry login registry-1.docker.io -u ${{ env.DOCKERHUB_USERNAME }} --password-stdin
+     
       - name: Deploy files
         run: |
-          
           sed -i "s|{{ version }}|${{ github.run_number }}|g" ./mi-chart/Chart.yaml
           cat ./mi-chart/Chart.yaml
           helm package ./mi-chart
